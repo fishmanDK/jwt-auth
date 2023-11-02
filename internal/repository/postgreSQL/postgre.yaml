@@ -1,0 +1,6 @@
+name_db: "postgres"
+user_db: "postgres"
+password_db: "auth-jwt"
+host: "localhost"
+port: "5436"
+sslmode: "disable"
