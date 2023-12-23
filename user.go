@@ -7,7 +7,7 @@ type User struct {
 }
 
 type CreateUser struct {
-	AppName   string `json:"app_name"`
+	AppId     int64  `json:"app_id"`
 	Role      string `json:"role"`
 	Email     string `json:"email"`
 	UserName  string `json:"user_name"`

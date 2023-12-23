@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option go_package = "./jwt-auth/internal/convert-proto";
+
+service Auth{
+  rpc CreateUer(NewUser) returns (UserId){}
+  rpc Authentication(User) returns (AuthResponse) {}
+}
+
+message NewUser{
+  int64  AppId = 1;
+  string Role = 2;
+  string Email = 3;
+  string UserName = 4;
+  string FirstName = 5;
+  string LastName = 6;
+  string Password = 7;
+}
+
+message UserId{
+  Response response = 1;
+  int64 UserId = 2;
+}
+
+message User{
+  string AppName = 1;
+  string Email = 2;
+  string Password = 3;
+}
+
+message AuthResponse{
+  Response response = 1;
+  Tokens tokens = 2;
+}
+
+message Response{
+  string status = 1;
+  string error = 2;
+}
+
+message Tokens{
+  string AccessToken = 1;
+  string RefreshToken = 2;
+}

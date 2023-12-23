@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS users
     user_name varchar(63) not null,
     first_name varchar(63),
     last_name varchar(63),
-    email varchar(255),
-    password_hash varchar(255),
+    email varchar(255) not null,
+    password_hash varchar(255) not null,
     role varchar(63) not null,
 
     CONSTRAINT unique_idService_email UNIQUE (id_service, email),

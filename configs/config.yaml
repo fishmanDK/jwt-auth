@@ -1,4 +1,7 @@
-env: 'local'
+env: local
 
-port: '8080'
+http-server:
+  address: "localhost:8081"
+  readTimeout: 3s
+  writeTimeout: 3s
 

@@ -2,21 +2,12 @@ package postgresql
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"time"
-
-	_ "github.com/lib/pq"
-	jwtauth "github.com/fishmanDK"
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
+	"log"
+	"os"
 )
-
-type Postgre interface {
-	CreateUser(new_user jwtauth.CreateUser) error
-	Authentication(user jwtauth.User) (AuthResult, error)
-	AddRefresh(refresh_token string, expiresAt time.Time) error
-}
 
 type PostgreDB struct {
 	postgre_db *sqlx.DB
@@ -25,7 +16,7 @@ type PostgreDB struct {
 func NewPostgreDB(cfg postgreConfig) (*PostgreDB, error) {
 	link := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s", cfg.Host, cfg.Port, cfg.User, cfg.DBName, cfg.Password, cfg.SSLMode)
 	db, err := sqlx.Open("postgres", link)
-	
+
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +41,7 @@ type postgreConfig struct {
 }
 
 func InitPostgreConfig() postgreConfig {
-	config_path := "internal/repository/postgreSQL/postgre.yaml"
+	config_path := "internal/repository/postgreSQL/postgres.yaml"
 	if config_path == "" {
 		log.Fatal("config_path is not set")
 	}

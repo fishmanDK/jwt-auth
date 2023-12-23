@@ -3,18 +3,23 @@ package configs
 import (
 	"log"
 	"os"
+	"time"
 
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
-type Server struct {
-	Port string `yaml:"port"`
+type Config struct {
+	Env        string `yaml:"env" env-default:"local"`
+	HttpServer `yaml:"h_http-server"`
 }
 
+type HttpServer struct {
+	Address      string        `yaml:"address" env-default:"localhost:8080"`
+	ReadTimeout  time.Duration `yaml:"readTimeout"  env-default:"3s"`
+	WriteTimeout time.Duration `yaml:"writeTimeout"  env-default:"3s"`
+}
 
-
-
-func NewServer() Server {
+func NewConfig() *Config {
 	config_path := "configs/config.yaml"
 
 	if config_path == "" {
@@ -25,12 +30,10 @@ func NewServer() Server {
 		log.Fatalf("config file does not exist: %s", config_path)
 	}
 
-	var cfg Server
+	var cfg Config
 
 	if err := cleanenv.ReadConfig(config_path, &cfg); err != nil {
 		log.Fatalf("cannot read config: %s", err.Error())
 	}
-	return cfg
+	return &cfg
 }
-
-

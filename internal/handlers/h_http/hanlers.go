@@ -1,25 +1,24 @@
-package handlers
+package h_http
 
 import (
 	"github.com/fishmanDK/internal/service"
 	"github.com/gin-gonic/gin"
+	"log/slog"
 )
 
-
-type Handlers struct{
+type Handlers struct {
 	Service *service.Service
 }
 
-
-func NewHandlers(serv *service.Service) *Handlers{
+func NewHandlers(serv *service.Service) *Handlers {
 	return &Handlers{
 		Service: serv,
 	}
 }
 
-
-func(h *Handlers) InitRouts() *gin.Engine{
+func (h *Handlers) InitRouts(logger *slog.Logger) *gin.Engine {
 	router := gin.Default()
+	router.Use(LoggerMiddleware(logger))
 
 	auth := router.Group("/auth")
 	{

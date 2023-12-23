@@ -2,7 +2,7 @@ package service
 
 import (
 	jwtauth "github.com/fishmanDK"
-	postgresql "github.com/fishmanDK/internal/repository/postgreSQL"
+	"github.com/fishmanDK/internal/repository"
 )
 
 type Tokens struct {
@@ -10,11 +10,9 @@ type Tokens struct {
 	Refresh_token string
 }
 
-type Validate interface {
-}
-
-type Authentication interface{
+type Authentication interface {
 	Authentication(user jwtauth.User) (Tokens, error)
+	CreateUser(newUser jwtauth.CreateUser) (int64, error)
 }
 
 type JWT interface {
@@ -23,14 +21,11 @@ type JWT interface {
 }
 
 type Service struct {
-	Validate
 	Authentication
-
 }
 
-func NewService(repo *postgresql.PostgreDB) *Service {
+func NewService(repo *repository.Storage) *Service {
 	return &Service{
-		Validate: NewValidateService(repo),
 		Authentication: NewAuthService(repo),
 	}
 }
