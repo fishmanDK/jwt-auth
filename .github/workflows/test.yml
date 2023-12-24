@@ -9,6 +9,6 @@ jobs:
   hello:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: Print hello golang
-      run: echo "hello golang"
+    steps:
+      - name: print hello golang
+        run: echo "hello golang"
